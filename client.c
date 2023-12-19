@@ -35,6 +35,8 @@ void catch_ctrl_c_and_exit(int sig) {
     flag = 1;
 }
 
+////SEND MESSAGE HANDLERR
+
 void send_msg_handler() {
   char message[LENGTH] = {};
 	char buffer[LENGTH + 32] = {};
@@ -56,6 +58,8 @@ void send_msg_handler() {
   }
   catch_ctrl_c_and_exit(2);
 }
+
+//RECEIVED MESSAGE HANDLER
 
 void recv_msg_handler() {
 	char message[LENGTH] = {};
@@ -97,7 +101,7 @@ int main(int argc, char **argv){
 	struct sockaddr_in server_addr;
 
 	/* Socket settings */
-	sockfd = socket(AF_INET, SOCK_STREAM, 0);
+  sockfd = socket(AF_INET, SOCK_STREAM, 0);
   server_addr.sin_family = AF_INET;
   server_addr.sin_addr.s_addr = inet_addr(ip);
   server_addr.sin_port = htons(port);
@@ -113,7 +117,9 @@ int main(int argc, char **argv){
 	// Send name
 	send(sockfd, name, 32, 0);
 
-	printf("=== WELCOME TO THE CHATROOM ===\n");
+	printf("-------\xE2\x99\xA3 WELCOME TO THE CHAT \xE2\x99\xA3------\n");
+
+//CREATE TWO THREADS ONE FOR SENDING THE MESSAGE ANOTHER ONE FOR RECEIVE THE MESSAGE
 
 	pthread_t send_msg_thread;
   if(pthread_create(&send_msg_thread, NULL, (void *) send_msg_handler, NULL) != 0){
